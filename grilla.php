@@ -1,5 +1,6 @@
 <?php
-//IMPLEMENTAR...
+    //IMPLEMENTAR...
+    require_once "verificar_sesion.php";
 ?>
 <div class="animated bounceInRight" style="height:460px;overflow:auto;border-style:solid" >
     <table class="table">

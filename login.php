@@ -1,6 +1,15 @@
+<?php
+	
+	session_start();
+
+	if (isset($_SESSION["Usuario"]))
+		header("location:Principal.php");
+
+?>
+
 <html>
 <head>
-	<title>APELLIDO Y NOMBRE DEL ALUMNO</title>
+	<title>Romero Federico</title>
 	  
         <meta charset="UTF-8">
         <!-- jQuery library -->

@@ -1,5 +1,6 @@
 <?php
-//IMPLEMENTAR...
+    //IMPLEMENTAR...
+    require_once "verificar_sesion.php";
 ?>
 <html>
     <head>
