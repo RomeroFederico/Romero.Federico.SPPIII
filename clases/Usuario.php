@@ -64,6 +64,20 @@
         public static function TraerTodosLosPerfiles()
         {
     		//IMPLEMENTAR...
+            $usuarios = array();
+
+            $objetoAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+
+            $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT * FROM usuarios");
+
+            $consulta->execute();
+
+            $consulta->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'Usuario');
+
+            foreach ($consulta as $usuario)
+                array_push($usuarios, $usuario);
+
+            return $usuarios;
         }
 
         public static function Borrar($id)

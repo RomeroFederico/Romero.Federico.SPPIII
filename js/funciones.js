@@ -28,8 +28,29 @@ function Logout()
 		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
 	});
 }
-function MostrarGrilla() {//#3
-		//IMPLEMENTAR...
+function MostrarGrilla()
+{
+	//#3
+	//IMPLEMENTAR...
+	var form = new FormData();
+
+	form.append("queMuestro", "3");
+
+	$.ajax({
+		type: "POST",
+		url: "administracion.php",
+		dataType: "text",
+		data: form,
+		contentType: false,
+		processData: false,
+		async: true
+	})
+	.done(function (resultado) {
+		$("#divGrilla").html(resultado);
+	})
+	.fail(function (jqXHR, textStatus, errorThrown) {
+		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+	});
 }
 function Home() {//#3-sin case
 		//IMPLEMENTAR...
