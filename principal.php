@@ -1,10 +1,12 @@
 <?php
     //IMPLEMENTAR...
     require_once "verificar_sesion.php";
+
+    $objUser = json_decode($_SESSION["Usuario"]);
 ?>
 <html>
     <head>
-        <title>APELLIDO Y NOMBRE DEL ALUMNO</title> 
+        <title>Romero Federico</title> 
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +31,8 @@
 				echo "<a class='btn btn-danger animated bounceInLeft' href='#' onclick='Logout()'><span class='glyphicon glyphicon-off'></span>LogOut&nbsp;</a>";        	  
                 ?>
                 <span id="spanFoto" class="animated bounceInRight" style='margin-top:-38px' ><img src="./fotos/<?php echo $objUser->foto; ?>" width='80px' height='80px'/></span>
-                <span id="spanDatos" class="animated bounceInRight" style='margin-top:-10px' ><h3><?php //IMPLEMENTAR... ?>&nbsp;&nbsp;</h3></span>
+                <span id="spanDatos" class="animated bounceInRight" style='margin-top:-10px' ><h3><?php //IMPLEMENTAR...
+                    echo $objUser->nombre . " [" . $objUser->perfil . "]"; ?>&nbsp;&nbsp;</h3></span>
             </div>
             <h1 style="font-size:28px">PRINCIPAL</h1>
             <hr/>
