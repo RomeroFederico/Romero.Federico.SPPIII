@@ -39,6 +39,18 @@
         public static function TraerUnUsuarioPorId($id)
         {
     		//IMPLEMENTAR...
+            $objetoAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+
+            $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT * FROM usuarios WHERE (id = :id)");
+
+            $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+
+            $consulta->execute();
+
+            if ($consulta->rowCount() != 1)
+                return false;
+
+            return $consulta->fetchObject('Usuario');
         }
 
         public static function Agregar($obj)
@@ -59,11 +71,6 @@
         public static function TraerTodosLosUsuarios()
         {
     		//IMPLEMENTAR...
-        }
-
-        public static function TraerTodosLosPerfiles()
-        {
-    		//IMPLEMENTAR...
             $usuarios = array();
 
             $objetoAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
@@ -78,6 +85,12 @@
                 array_push($usuarios, $usuario);
 
             return $usuarios;
+        }
+
+        public static function TraerTodosLosPerfiles()
+        {
+    		//IMPLEMENTAR... Preguntar en base a que se trae.
+            return array("administrador", "usuario", "invitado");
         }
 
         public static function Borrar($id)
