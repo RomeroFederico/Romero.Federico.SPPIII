@@ -28,6 +28,7 @@ function Logout()
 		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
 	});
 }
+
 function MostrarGrilla()
 {
 	//#3
@@ -52,9 +53,11 @@ function MostrarGrilla()
 		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
 	});
 }
+
 function Home() {//#3-sin case
 		//IMPLEMENTAR...
 }
+
 function CargarFormUsuario(queHago, id) 
 {
 	//#4
@@ -93,9 +96,41 @@ function CargarFormUsuario(queHago, id)
 		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
 	});
 }
-function SubirFoto() {//#5
-		//IMPLEMENTAR...
+
+function SubirFoto() 
+{
+	//#5
+	//IMPLEMENTAR...
+	var formData = new FormData();
+
+	var imagen = $("#archivo")[0];
+	formData.append("imagenModificada", imagen.files[0]);
+	formData.append("queMuestro", "5");
+	formData.append("fotoAnterior", $("#fotoTmp").attr("src"));
+
+	$.ajax({
+		type: "POST",
+		url: "administracion.php",
+		dataType: "JSON",
+		data: formData,
+		contentType: false,
+		processData: false,
+		async: true
+	})
+	.done(function (objeto) {
+		if (!objeto.exito)
+			alert(objeto.mensaje);
+		else
+		{
+			$("#fotoTmp").attr("src", objeto.imagenSubidaRuta);
+			$("#hdnFotoSubir").val(objeto.imagenSubida);
+		}
+	})
+	.fail(function (jqXHR, textStatus, errorThrown) {
+		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+	});
 }
+
 function AgregarUsuario() {//#6
 		//IMPLEMENTAR...
 }
