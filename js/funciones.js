@@ -182,6 +182,12 @@ function ModificarUsuario()
 		alert(objeto.mensaje);
 		if (objeto.exito)
 		{
+			if (objeto.usuarioEnSesionModificado)
+			{
+                $("#spanDatos").children("h3").html(objeto.usuarioEnSesionNombre + " [" + objeto.usuarioEnSesionPerfil + "]");
+                $("#spanFoto").children("img").attr("src", objeto.usuarioEnSesionFoto);
+			}
+
 			$("#divFrm").html("");
 			$("#divFrm").css("border-style", "none");
 			$("#divFoto").html("");
