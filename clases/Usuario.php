@@ -14,7 +14,13 @@
             if ($id !== NULL)
             {
                 //IMPLEMENTAR...
-                Usuario::TraerUnUsuarioPorId($id);
+                $usuario = Usuario::TraerUnUsuarioPorId($id);
+                $this->id = $id;
+                $this->nombre = $usuario->nombre;
+                $this->email = $usuario->email;
+                $this->password = $usuario->password;
+                $this->perfil = $usuario->perfil;
+                $this->foto = $usuario->foto;
             }
         }
         
@@ -66,6 +72,27 @@
         public static function Modificar($obj)
         {
     		//IMPLEMENTAR...
+            try
+            {
+                $objetoAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+
+                $consulta = $objetoAccesoDatos->RetornarConsulta("UPDATE usuarios SET nombre = :Nombre, email = :Email, perfil = :Perfil, foto = :Foto  
+                                                 WHERE (id = :Id)");
+
+                $consulta->bindValue(':Id', $obj->id, PDO::PARAM_INT);
+                $consulta->bindValue(':Nombre', $obj->nombre, PDO::PARAM_STR);
+                $consulta->bindValue(':Email', $obj->email, PDO::PARAM_STR);
+                $consulta->bindValue(':Perfil', $obj->perfil, PDO::PARAM_STR);
+                $consulta->bindValue(':Foto', $obj->foto, PDO::PARAM_STR);
+
+                $consulta->execute();
+            }
+            catch (Exception $e) 
+            {
+                return FALSE;
+            }
+
+            return TRUE;
         }
 
         public static function TraerTodosLosUsuarios()

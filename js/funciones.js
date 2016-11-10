@@ -58,7 +58,7 @@ function Home() {//#3-sin case
 		//IMPLEMENTAR...
 }
 
-function CargarFormUsuario(queHago, id) 
+function CargarFormUsuario(queHago, id) // Agrego el parametro id.
 {
 	//#4
 	//IMPLEMENTAR...
@@ -137,16 +137,62 @@ function AgregarUsuario() {//#6
 function EditarUsuario(obj) {//#7 sin case
 		//IMPLEMENTAR...
 }
-function EliminarUsuario(id) // Agrego el parametro id.
+function EliminarUsuario()
 {
 	//#7
 	//IMPLEMENTAR...
+
 }
-function ModificarUsuario(id) 
+
+function ModificarUsuario() 
 {
 	//#8
 	//IMPLEMENTAR...
+	var nombre = $("#txtNombre").val();
+	var email = $("#txtEmail").val();
+
+	if (!ValidarCampos(nombre, email))
+	{
+		alert("No se han completado los campos correctamente.");
+		return;
+	}
+
+	var formData = new FormData();
+
+	var registroModificado = {"id" : $("#hdnIdUsuario").val(),
+							  "nombre" : nombre,
+							  "email" : email,
+							  "perfil" : $("#cboPerfiles").val(),
+							  "foto" : $("#hdnFotoSubir").val()};
+
+	formData.append("usuarioModificado", JSON.stringify(registroModificado));
+	formData.append("queMuestro", "8");
+	formData.append("fotoNueva", $("#fotoTmp").attr("src"));
+
+	$.ajax({
+		type: "POST",
+		url: "administracion.php",
+		dataType: "JSON",
+		data: formData,
+		contentType: false,
+		processData: false,
+		async: true
+	})
+	.done(function (objeto) {
+		alert(objeto.mensaje);
+		if (objeto.exito)
+		{
+			$("#divFrm").html("");
+			$("#divFrm").css("border-style", "none");
+			$("#divFoto").html("");
+			MostrarGrilla();
+		}
+	})
+	.fail(function (jqXHR, textStatus, errorThrown) {
+		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+	});
 }
+
 function ElegirTheme() {//#9
 		//IMPLEMENTAR...
 }
@@ -155,4 +201,11 @@ function AplicarTheme(radio) {//sin case
 }
 function GuardarTheme() {//#10
 		//IMPLEMENTAR...
+}
+
+function ValidarCampos(nombre, email)
+{
+	if (nombre.length == 0 || email.length == 0)
+		return false;
+	return true;
 }

@@ -5,13 +5,13 @@
     $usuarioEnSesion = json_decode($_SESSION["Usuario"]);
 
     if (isset($_POST["IdUsuario"]))
-        $usuario = Usuario::TraerUnUsuarioPorId($_POST["IdUsuario"]);
+        $usuario = new Usuario($_POST["IdUsuario"]);
 
 ?>
 <div id="divFrm" class="animated bounceInLeft" style="height:330px;overflow:auto;margin-top:0px;border-style:solid">
     <input type="hidden" id="hdnIdUsuario" value="<?php /*IMPLEMENTAR...*/ echo  $usuario->id; ?>" />
-    <input type="text" placeholder="Nombre" id="txtNombre" value="<?php /*IMPLEMENTAR...*/ echo $usuario->nombre; ?>" <?php if ($_POST["queHago"] != 'Agregar') echo 'readonly'; ?>/>
-    <input type="text" placeholder="E-mail" id="txtEmail" value="<?php /*IMPLEMENTAR...*/ echo  $usuario->email; ?>" <?php if ($_POST["queHago"] != 'Agregar') echo 'readonly'; ?>/>
+    <input type="text" placeholder="Nombre" id="txtNombre" value="<?php /*IMPLEMENTAR...*/ echo $usuario->nombre; ?>" <?php if ($_POST["queHago"] == 'Eliminar') echo 'readonly'; ?>/>
+    <input type="text" placeholder="E-mail" id="txtEmail" value="<?php /*IMPLEMENTAR...*/ echo  $usuario->email; ?>" <?php if ($_POST["queHago"] == 'Eliminar') echo 'readonly'; ?>/>
     <input type="password" placeholder="Password" id="txtPassword" value="" <?php if ($_POST["queHago"] != 'Agregar') echo 'readonly'; ?>/>
 
     <span>Perfil</span>
@@ -33,7 +33,7 @@
 
     <input type="file" id="archivo" onchange="SubirFoto()" <?php if ($_POST["queHago"] == 'Eliminar') echo 'disabled'; ?>/> 
 
-    <input type="button" class="MiBotonUTN" onclick="<?php //IMPLEMENTAR... ?>" value="<?php /*IMPLEMENTAR...*/ echo $_POST["queHago"]; ?>"  />
+    <input type="button" class="MiBotonUTN" onclick="<?php /*IMPLEMENTAR...*/ echo $_POST["queHago"] . 'Usuario()'; ?>" value="<?php /*IMPLEMENTAR...*/ echo $_POST["queHago"]; ?>"  />
     <input type="hidden" id="hdnQueHago" value="agregar" />
 </div>
 <div id="divFoto"  class="animated bounceInLeft" style="border-style:none" >
