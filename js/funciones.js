@@ -107,6 +107,7 @@ function SubirFoto()
 	formData.append("imagenModificada", imagen.files[0]);
 	formData.append("queMuestro", "5");
 	formData.append("fotoAnterior", $("#fotoTmp").attr("src"));
+	formData.append("idFoto", $("#hdnIdUsuario").val());
 
 	$.ajax({
 		type: "POST",
@@ -141,7 +142,34 @@ function EliminarUsuario()
 {
 	//#7
 	//IMPLEMENTAR...
+	var formData = new FormData();
 
+	formData.append("idEliminar", $("#hdnIdUsuario").val());
+	formData.append("fotoEliminar", $("#fotoTmp").attr("src"));
+	formData.append("queMuestro", "7");
+
+	$.ajax({
+		type: "POST",
+		url: "administracion.php",
+		dataType: "JSON",
+		data: formData,
+		contentType: false,
+		processData: false,
+		async: true
+	})
+	.done(function (objeto) {
+		alert(objeto.mensaje);
+		if (objeto.exito)
+		{
+			$("#divFrm").html("");
+			$("#divFrm").css("border-style", "none");
+			$("#divFoto").html("");
+			MostrarGrilla();	
+		}
+	})
+	.fail(function (jqXHR, textStatus, errorThrown) {
+		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+	});
 }
 
 function ModificarUsuario() 

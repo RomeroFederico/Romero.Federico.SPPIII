@@ -123,6 +123,22 @@
         public static function Borrar($id)
         {
     		//IMPLEMENTAR...
+            try
+            {
+                $objetoAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+
+                $consulta = $objetoAccesoDatos->RetornarConsulta("DELETE FROM usuarios WHERE (id = :Id)");
+
+                $consulta->bindValue(':Id', $id, PDO::PARAM_INT);
+
+                $consulta->execute();
+            }
+            catch (Exception $e) 
+            {
+                return FALSE;
+            }
+
+            return TRUE;
         }
     }
 
