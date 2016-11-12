@@ -3,6 +3,9 @@
     require_once "verificar_sesion.php";
 
     $objUser = json_decode($_SESSION["Usuario"]);
+
+    if (isset($_COOKIE["theme" . $objUser->id]))
+        $theme = "background-color:" . $_COOKIE["theme" . $objUser->id];
 ?>
 <html>
     <head>

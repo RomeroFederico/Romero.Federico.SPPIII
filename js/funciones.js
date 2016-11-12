@@ -54,8 +54,11 @@ function MostrarGrilla()
 	});
 }
 
-function Home() {//#3-sin case
-		//IMPLEMENTAR...
+function Home()
+{	
+	//#3-sin case
+	//IMPLEMENTAR...
+	window.location.href = "principal.php";
 }
 
 function CargarFormUsuario(queHago = 0, id = 0) // Agrego el parametro id.
@@ -63,6 +66,10 @@ function CargarFormUsuario(queHago = 0, id = 0) // Agrego el parametro id.
 	//#4
 	//IMPLEMENTAR...
 	var form = new FormData();
+
+	if ($("#divGrilla").html().length > 14)  //Cierro la grilla theme si esta abierta, pero no la de usuarios.
+		if ($("#divGrilla").find("div").css("background-color") == 'rgb(0, 0, 0)')
+			$("#divGrilla").html("");
 
 	switch (queHago)
 	{
@@ -286,19 +293,73 @@ function ModificarUsuario()
 	});
 }
 
-function ElegirTheme() {//#9
-		//IMPLEMENTAR...
+function ElegirTheme() 
+{
+	//#9
+	//IMPLEMENTAR...
+	var form = new FormData();
+
+	if ($("#divAbm").html().length > 14) // Cierro cualquier form, solo se vera esta grilla.
+		$("#divAbm").html("");
+
+	form.append("queMuestro", "9");
+
+	$.ajax({
+		type: "POST",
+		url: "administracion.php",
+		dataType: "text",
+		data: form,
+		contentType: false,
+		processData: false,
+		async: true
+	})
+	.done(function (resultado) {
+		$("#divGrilla").html(resultado);
+	})
+	.fail(function (jqXHR, textStatus, errorThrown) {
+		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+	});
 }
-function AplicarTheme(radio) {//sin case
-		//IMPLEMENTAR...
+function AplicarTheme(radio) 
+{
+	//sin case
+	//IMPLEMENTAR...
+	var color = $("#" + radio).val();
+	$("#miBody").css("background-color", color);
 }
-function GuardarTheme() {//#10
-		//IMPLEMENTAR...
+function GuardarTheme() 
+{
+	//#10
+	//IMPLEMENTAR...
+	var color = $("#miBody").css("background-color");
+
+	var form = new FormData();
+
+	form.append("queMuestro", "10");
+	form.append("tema", color);
+
+	$.ajax({
+		type: "POST",
+		url: "administracion.php",
+		dataType: "JSON",
+		data: form,
+		contentType: false,
+		processData: false,
+		async: true
+	})
+	.done(function (objeto) {
+		alert(objeto.mensaje);
+		if (objeto.exito)
+			$("#divGrilla").html("");
+	})
+	.fail(function (jqXHR, textStatus, errorThrown) {
+		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+	});
 }
 
 function ValidarCampos(nombre, email, password = 0)
 {
-	if (nombre.length == 0 || email.length == 0 || (password != 0 && password.length < 6))
+	if (nombre.length == 0 || email.length == 0 || (password !== 0 && password.length < 6))
 		return false;
 	return true;
 }
