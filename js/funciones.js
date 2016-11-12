@@ -76,7 +76,7 @@ function CargarFormUsuario(queHago = 0, id = 0) // Agrego el parametro id.
 			queHago = "Editar Perfil";
 			break;
 		default:
-			queHago = "Ingresar";
+			queHago = "Agregar";
 	}
 
 	form.append("queMuestro", "4");
@@ -135,8 +135,55 @@ function SubirFoto()
 	});
 }
 
-function AgregarUsuario() {//#6
-		//IMPLEMENTAR...
+function AgregarUsuario() 
+{
+	//#6
+	//IMPLEMENTAR...
+	var nombre = $("#txtNombre").val();
+	var email = $("#txtEmail").val();
+	var password = $("#txtPassword").val();
+
+	if (!ValidarCampos(nombre, email, password))
+	{
+		alert("No se han completado los campos correctamente.");
+		return;
+	}
+
+	var formData = new FormData();
+
+	var nuevoRegistro = {"id" : $("#hdnIdUsuario").val(),
+						 "nombre" : nombre,
+						 "email" : email,
+						 "perfil" : $("#cboPerfiles").val(),
+						 "password" : password,
+						 "foto" : $("#hdnFotoSubir").val()};
+
+	formData.append("nuevoUsuario", JSON.stringify(nuevoRegistro));
+	formData.append("queMuestro", "6");
+	formData.append("fotoNueva", $("#fotoTmp").attr("src"));
+
+	$.ajax({
+		type: "POST",
+		url: "administracion.php",
+		dataType: "JSON",
+		data: formData,
+		contentType: false,
+		processData: false,
+		async: true
+	})
+	.done(function (objeto) {
+		alert(objeto.mensaje);
+		if (objeto.exito)
+		{
+			$("#divAbm").html("");
+
+			if ($("#divGrilla").html().length > 14)
+				MostrarGrilla();
+		}
+	})
+	.fail(function (jqXHR, textStatus, errorThrown) {
+		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+	});
 }
 function EditarUsuario(obj) 
 {
@@ -227,7 +274,7 @@ function ModificarUsuario()
                 		$(".btn.btn-primary.animated.bounceInLeft").hide();
                 }
 			}
-			
+
 			$("#divAbm").html("");
 
 			if ($("#divGrilla").html().length > 14)
@@ -249,9 +296,9 @@ function GuardarTheme() {//#10
 		//IMPLEMENTAR...
 }
 
-function ValidarCampos(nombre, email)
+function ValidarCampos(nombre, email, password = 0)
 {
-	if (nombre.length == 0 || email.length == 0)
+	if (nombre.length == 0 || email.length == 0 || (password != 0 && password.length < 6))
 		return false;
 	return true;
 }

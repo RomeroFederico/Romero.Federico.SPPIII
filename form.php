@@ -4,8 +4,24 @@
 
     $usuarioEnSesion = json_decode($_SESSION["Usuario"]);
 
-    if (isset($_POST["IdUsuario"]))
-        $usuario = new Usuario($_POST["IdUsuario"]);
+    if (isset($_POST["IdUsuario"]))                     //Evita entrar desde el navegador con ruta directa
+    {
+        if ($_POST["IdUsuario"] != 0)
+            $usuario = new Usuario($_POST["IdUsuario"]);
+        else
+        {
+            $usuarios = Usuario::TraerTodosLosUsuarios();
+            $usuario = new Usuario();
+            $usuario->id = $usuarios[count($usuarios) - 1]->id + 1;
+            $usuario->nombre = '';
+            $usuario->email = '';
+            $usuario->perfil = 'usuario';
+            $usuario->password = '';
+            $usuario->foto = 'pordefecto.jpg';
+        }
+    }
+    else
+        header("location:principal.php");
 
 ?>
 <div id="divFrm" class="animated bounceInLeft" style="height:330px;overflow:auto;margin-top:0px;border-style:solid">
@@ -33,7 +49,7 @@
 
     <input type="file" id="archivo" onchange="SubirFoto()" <?php if ($_POST["queHago"] == 'Eliminar') echo 'disabled'; ?>/> 
 
-    <input type="button" class="MiBotonUTN" onclick="<?php /*IMPLEMENTAR...*/ echo ($_POST["queHago"] != 'Editar Perfil')? ($_POST["queHago"] . 'Usuario()') : 'ModificarUsuario()'; ?>" value="<?php /*IMPLEMENTAR...*/ echo $_POST["queHago"]; ?>"  />
+    <input type="button" class="MiBotonUTN" onclick="<?php /*IMPLEMENTAR...*/ echo ($_POST["queHago"] != 'Editar Perfil')? ($_POST["queHago"] . 'Usuario()') : 'ModificarUsuario()'; ?>" value="<?php /*IMPLEMENTAR...*/ if ($_POST["queHago"] == 'Agregar') echo "Guardar"; else echo $_POST["queHago"]; ?>"  />
     <input type="hidden" id="hdnQueHago" value="agregar" />
 </div>
 <div id="divFoto"  class="animated bounceInLeft" style="border-style:none" >

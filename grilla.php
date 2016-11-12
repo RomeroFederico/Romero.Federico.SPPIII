@@ -3,6 +3,9 @@
     require_once "verificar_sesion.php";
     require_once "clases/AccesoDatos.php";
     require_once "clases/Usuario.php";
+
+    if (!isset($_POST['queMuestro']))       //Evita entrar desde el navegador con ruta directa
+        header("location:principal.php");
 ?>
 <div class="animated bounceInRight" style="height:460px;overflow:auto;border-style:solid" >
     <table class="table">

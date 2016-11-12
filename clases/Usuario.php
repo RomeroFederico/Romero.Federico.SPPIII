@@ -62,6 +62,28 @@
         public static function Agregar($obj)
         {
     		//IMPLEMENTAR...
+            try
+            {
+                $objetoAccesoDatos = AccesoDatos::dameUnObjetoAcceso();
+
+                $consulta = $objetoAccesoDatos->RetornarConsulta("INSERT INTO usuarios (id, nombre, email, password, perfil, foto) 
+                                                 VALUES (:Id, :Nombre, :Email, :Password, :Perfil, :Foto)");
+
+                $consulta->bindValue(':Id', $obj->id, PDO::PARAM_INT);
+                $consulta->bindValue(':Nombre', $obj->nombre, PDO::PARAM_STR);
+                $consulta->bindValue(':Email', $obj->email, PDO::PARAM_STR);
+                $consulta->bindValue(':Password', $obj->password, PDO::PARAM_STR);
+                $consulta->bindValue(':Perfil', $obj->perfil, PDO::PARAM_STR);
+                $consulta->bindValue(':Foto', $obj->foto, PDO::PARAM_STR);
+
+                $consulta->execute();
+            }
+            catch (Exception $e) 
+            {
+                return FALSE;
+            }
+
+            return TRUE;
         }
 
         public function ActualizarFoto()
