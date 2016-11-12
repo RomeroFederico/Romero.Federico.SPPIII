@@ -33,7 +33,7 @@
 
     <input type="file" id="archivo" onchange="SubirFoto()" <?php if ($_POST["queHago"] == 'Eliminar') echo 'disabled'; ?>/> 
 
-    <input type="button" class="MiBotonUTN" onclick="<?php /*IMPLEMENTAR...*/ echo $_POST["queHago"] . 'Usuario()'; ?>" value="<?php /*IMPLEMENTAR...*/ echo $_POST["queHago"]; ?>"  />
+    <input type="button" class="MiBotonUTN" onclick="<?php /*IMPLEMENTAR...*/ echo ($_POST["queHago"] != 'Editar Perfil')? ($_POST["queHago"] . 'Usuario()') : 'ModificarUsuario()'; ?>" value="<?php /*IMPLEMENTAR...*/ echo $_POST["queHago"]; ?>"  />
     <input type="hidden" id="hdnQueHago" value="agregar" />
 </div>
 <div id="divFoto"  class="animated bounceInLeft" style="border-style:none" >

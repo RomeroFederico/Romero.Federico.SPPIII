@@ -58,7 +58,7 @@ function Home() {//#3-sin case
 		//IMPLEMENTAR...
 }
 
-function CargarFormUsuario(queHago, id) // Agrego el parametro id.
+function CargarFormUsuario(queHago = 0, id = 0) // Agrego el parametro id.
 {
 	//#4
 	//IMPLEMENTAR...
@@ -72,8 +72,11 @@ function CargarFormUsuario(queHago, id) // Agrego el parametro id.
 		case 2:
 			queHago = "Eliminar";
 			break;
+		case 3:
+			queHago = "Editar Perfil";
+			break;
 		default:
-			queHago = "Agregar";
+			queHago = "Ingresar";
 	}
 
 	form.append("queMuestro", "4");
@@ -135,8 +138,11 @@ function SubirFoto()
 function AgregarUsuario() {//#6
 		//IMPLEMENTAR...
 }
-function EditarUsuario(obj) {//#7 sin case
-		//IMPLEMENTAR...
+function EditarUsuario(obj) 
+{
+	//#7 sin case
+	//IMPLEMENTAR...
+	CargarFormUsuario(3, obj.id);
 }
 function EliminarUsuario()
 {
@@ -214,12 +220,18 @@ function ModificarUsuario()
 			{
                 $("#spanDatos").children("h3").html(objeto.usuarioEnSesionNombre + " [" + objeto.usuarioEnSesionPerfil + "]");
                 $("#spanFoto").children("img").attr("src", objeto.usuarioEnSesionFoto);
+                if (objeto.usuarioEnSesionPerfil != "administrador")
+                {
+                	$('.btn.btn-info.animated.bounceInLeft').hide();
+                	if (objeto.usuarioEnSesionPerfil != "usuario")
+                		$(".btn.btn-primary.animated.bounceInLeft").hide();
+                }
 			}
+			
+			$("#divAbm").html("");
 
-			$("#divFrm").html("");
-			$("#divFrm").css("border-style", "none");
-			$("#divFoto").html("");
-			MostrarGrilla();
+			if ($("#divGrilla").html().length > 14)
+				MostrarGrilla();
 		}
 	})
 	.fail(function (jqXHR, textStatus, errorThrown) {
