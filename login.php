@@ -34,6 +34,7 @@
 				<input type="password" id="password" placeholder="Password" value="" />
 
 				<input type="button" class="btn btn-danger" value="LOGIN" onclick="Login()" />
+				<input type="button" class = "btn btn-info" value = "Registrarse" onclick = "Registrarse()"/>
 			</form>
 		</div>
 		<div style="text-align:center">
