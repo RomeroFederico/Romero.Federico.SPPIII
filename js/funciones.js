@@ -192,12 +192,14 @@ function AgregarUsuario()
 		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
 	});
 }
+
 function EditarUsuario(obj) 
 {
 	//#7 sin case
 	//IMPLEMENTAR...
 	CargarFormUsuario(3, obj.id);
 }
+
 function EliminarUsuario()
 {
 	//#7
@@ -320,6 +322,7 @@ function ElegirTheme()
 		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
 	});
 }
+
 function AplicarTheme(radio) 
 {
 	//sin case
@@ -327,6 +330,7 @@ function AplicarTheme(radio)
 	var color = $("#" + radio).val();
 	$("#miBody").css("background-color", color);
 }
+
 function GuardarTheme() 
 {
 	//#10
@@ -351,6 +355,35 @@ function GuardarTheme()
 		alert(objeto.mensaje);
 		if (objeto.exito)
 			$("#divGrilla").html("");
+	})
+	.fail(function (jqXHR, textStatus, errorThrown) {
+		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+	});
+}
+
+function MostrarGrillaEliminados()
+{
+	var form = new FormData();
+
+	if ($("#divAbm").html().length > 14) // Cierro cualquier form, solo se vera esta grilla.
+		$("#divAbm").html("");
+
+	form.append("queMuestro", "11");
+
+	$.ajax({
+		type: "POST",
+		url: "administracion.php",
+		dataType: "text",
+		data: form,
+		contentType: false,
+		processData: false,
+		async: true
+	})
+	.done(function (resultado) {
+		if (resultado == "ERROR")
+			alert("Ocurrio un problema al querer mostrar la grilla de eliminados.");
+		else
+			$("#divGrilla").html(resultado);
 	})
 	.fail(function (jqXHR, textStatus, errorThrown) {
 		alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
