@@ -15,7 +15,7 @@
             {
                 //IMPLEMENTAR...
                 $usuario = Usuario::TraerUnUsuarioPorId($id);
-                $this->id = $id;
+                $this->id = $usuario->id;
                 $this->nombre = $usuario->nombre;
                 $this->email = $usuario->email;
                 $this->password = $usuario->password;
